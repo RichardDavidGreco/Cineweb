@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Occo's Cinema</title>
+  
+  <!--BOOTSTRAP-->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
+  <!--W3C-->
+  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+  
+  <!--MY CSS-->
+  <link rel="stylesheet" href="myOwn.css">
+</head>
+
+<body onload="loading()">
+	
+	<!--This script load the jumbotron's images and content-->
+	<script src="body_home.js"></script>
+	
+	<div id="loader"></div>
+	<img id="img_loader" src="/images/loader.gif" alt="loader">
+	
+	<!--The slideshow-->
+	<div id="slideshow" class="carousel slide" data-ride="carousel">
+		<div class="carousel-inner" role="listbox">
+			<div class="item active">
+				<img src="images/over-nav.jpg" alt="cinema over navigation">
+			</div>
+			<div class="item">
+				<img src="images/over-nav2.jpg" alt="cinema over navigation">
+			</div>
+			<div class="item">
+				<img src="images/over-nav3.jpg" alt="cinema over navigation">
+			</div>
+			<div class="item">
+				<img src="images/over-nav4.jpg" alt="cinema over navigation">
+			</div>
+			<div class="item">
+				<img src="images/over-nav5.jpg" alt="cinema over navigation">
+			</div>
+			<a class="left carousel-control" href="#slideshow" data-slide="prev">
+ 				<span class="icon-prev"></span>
+			</a>
+			<a class="right carousel-control" href="#slideshow" data-slide="next">
+				<span class="icon-next"></span>
+			</a>
+		</div>
+	</div>
+	
+	<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="201">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="home.html"><img id="logo" src="images/chick.png" alt="cinema's logo" />Occo's Cinema</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a>Home</a></li>
+				<li><a href="palinsesto.html" target="_top">Palinsesto</a></li>
+				<li><a>Sale</a></li> 
+				<li><a href="prenota.html" target="_top">Prenota</a></li> 
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li id="register"><a data-toggle="modal" href="#reg_modal"><span class="glyphicon glyphicon-user"></span> Registrarsi</a></li>
+				<li id="log"><a data-toggle="modal" href="#log_modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+				<li id="user">
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							<span class="glyphicon glyphicon-user"></span> User
+						</button>
+						<ul class="dropdown-menu">
+							<li><a id="drop_1"></a></li>
+							<li><a id="drop_2"></a></li>
+							<li><a id="drop_2b"></a></li>
+							<li><a id="drop_3"></a></li>
+							<li><a id="drop_4"></a></li>
+							<li class="divider"></li>
+							<li style="cursor:pointer;"><a id="drop_5" onclick="logout()">Log Out</a></li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div id="log_modal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Effettua il login</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" onsubmit="return false">
+						<div class="form-group">
+							<label for="mail">Email:</label>
+							<input id="mail" type="email" class="form-control" placeholder="Inserire eMail" autocomplete>
+						</div>
+						<div class="form-group">
+							<label for="pssw">Password:</label>
+							<input id="pssw" type="password" class="form-control" placeholder="Inserire Password" autocomplete>
+						</div>
+						<div class="checkbox">
+							<label><input id="remember" type="checkbox" value="" checked>Ricordami</label>
+						</div>
+						<button type="submit" class="btn btn-default" onclick="login()">Login</button>
+					</form>
+					</br>
+					<div id="non-registrato" style="color: red; display: none;">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="close-modal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="reg_modal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Registrazione</h4>
+					<div class="progress" style="margin-bottom: 0px; margin-top: 5px;">
+						<div id="reg_bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%
+						</div>
+					</div>
+				</div>
+				<div class="modal-body">
+					<form id="form_register" role="form" onsubmit="return false">
+						<div class="form-group">
+							<label for="reg_mail">Email:</label>
+							<input id="reg_mail" type="email" class="form-control" placeholder="Inserire eMail" required>
+							<label for="reg_pssw">Password:</label>
+							<input id="reg_pssw" type="password" class="form-control" placeholder="Inserire Password" required>
+							<label for="reg_pssw2">Ripeti password:</label>
+							<input id="reg_pssw2" type="password" class="form-control" placeholder="Inserire Password" required>
+							<label for="reg_name">Nome:</label>
+							<input id="reg_name" type="text" class="form-control" placeholder="Inserire Nome" required>
+							<label for="reg_lastname">Cognome:</label>
+							<input id="reg_lastname" type="text" class="form-control" placeholder="Inserire Cognome" required>
+							<label for="reg_town">Luogo di Nascita:</label>
+							<input id="reg_town" type="text" class="form-control" placeholder="Inserire luogo di nascita" required>
+							<label for="reg_date">Data di Nascita:</label>
+							<input id="reg_date" type="text" class="form-control" placeholder="Formato gg-mm-aaaa" required>
+							<br />
+							<button type="submit" class="btn btn-default" onclick="register()">Registra</button>
+						</div>
+					</form>
+					<div id="error_reg">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="close-modal-register" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="w3-row">
+		<div id="3terzi" class="w3-container w3-twothird container">
+			<img src="/images/coming-soon.png" alt="Coming Soon"/>
+			<div class="jumbotron">
+				<h2><a href="" target="_blank"></a></h2><hr/>
+				<img class="img-rounded" src="" alt="" />
+				<p></p>
+			</div>
+			<div class="jumbotron">
+				<h2><a href="" target="_blank"></a></h2><hr/>
+				<img class="img-rounded img-responsive" src="" alt="" />
+				<p></p>
+			</div>
+			<div class="jumbotron">
+				<h2><a href="" target="_blank"></a></h2><hr/>
+				<img src="" alt="" />
+				<p></p>
+			</div>
+			<div class="jumbotron">
+				<h2><a href="" target="_blank"></a></h2><hr/>
+				<img src="" alt="" />
+				<p></p>
+			</div>
+			<div class="jumbotron">
+				<h2><a href="" target="_blank"></a></h2><hr/>
+				<img src="" alt="" />
+				<p></p>
+			</div>
+			<div class="jumbotron">
+				<h2><a href="" target="_blank"></a></h2><hr/>
+				<img src="" alt="" />
+				<p></p>
+			</div>
+			<div class="jumbotron">
+				<h2><a href="" target="_blank"></a></h2><hr/>
+				<img src="" alt="" />
+				<p></p>
+			</div>
+			<div class="jumbotron">
+ 				<h2><a href="" target="_blank"></a></h2><hr/>
+				<img src="" alt="" />
+				<p></p>
+			</div>
+		</div>
+		<div class="w3-container w3-third container">
+			<h5>Trailer</h5><hr/>
+			<iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=PLDs-H6Q4jRpOlOEYAxK6_X94ucP926_6Q&autoplay=1" frameborder="0" allowfullscreen style="margin: auto;"></iframe>
+			<br/><br/><br/><br/>
+			<h5>Promozioni</h5><hr/>
+			<table class="w3-table w3-bordered w3-striped w3-small w3-card-4">
+				<tr class="w3-purple">
+					<th>Nome</th>
+					<th>Prodotti</th>
+					<th>Prezzo</th>
+				</tr>
+				<tr class="w3-grey">
+					<td>Bimbi</td>
+					<td>Bibita piccola + PopCorn piccoli</td>
+					<td>5&#8364;</td>
+				</tr>
+				<tr class="w3-white">
+					<td>Singolo</td>
+					<td>Bibita media + PopCorn medio</td>
+					<td>10&#8364;</td>
+				</tr>
+				<tr class="w3-grey">
+					<td>Medium</td>
+					<td>2 Bibite medie + 2 PopCorn medi</td>
+					<td>15&#8364;</td>
+				</tr>
+				<tr class="w3-white">
+					<td>Large</td>
+					<td>2 Bibite grandi + 2 PopCorn grandi</td>
+					<td>20&#8364;</td>
+				</tr>
+				<tr class="w3-grey">
+					<td>Jumbo</td>
+					<td>2 Bibite jumbo + PopCorn jumbo</td>
+					<td>20&#8364;</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<script src="login_register.js"></script>
+	<script src="every_page.js"></script>
+</body>
+</html>
